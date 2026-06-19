@@ -272,7 +272,207 @@ textarea,input,select{font-family:'Inter',sans-serif;outline:none;}
 .save-status.saving{color:var(--gold-d);}
 .editor-hint{font-size:11.5px;color:var(--ink-f);font-family:'JetBrains Mono',monospace;}
 
-/* ── modal ──────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════
+   MOBILE  (≤ 680px)
+══════════════════════════════════════════════════════ */
+@media(max-width:680px){
+
+  /* ── layout: stack everything vertically ── */
+  html,body{overflow:hidden;height:100%;height:100dvh;}
+  body{flex-direction:column;}
+
+  /* sidebar becomes a hidden overlay drawer */
+  .sidebar{
+    position:fixed;left:-100%;top:0;bottom:0;z-index:200;
+    width:80vw;max-width:300px;
+    transition:left .25s cubic-bezier(.16,1,.3,1);
+    box-shadow:none;
+  }
+  .sidebar.open{left:0;box-shadow:8px 0 32px rgba(43,42,40,.18);}
+  .sidebar-backdrop{
+    display:none;position:fixed;inset:0;background:rgba(43,42,40,.35);
+    z-index:199;backdrop-filter:blur(1px);
+  }
+  .sidebar-backdrop.open{display:block;}
+
+  /* shell takes full screen */
+  .shell{flex:1;display:flex;flex-direction:column;overflow:hidden;height:100%;height:100dvh;}
+
+  /* topbar: tighter, add hamburger */
+  .topbar{padding:10px 14px;gap:8px;}
+  .topbar h2{font-size:16px;}
+  .search-wrap{flex:0 0 auto;width:36px;overflow:hidden;transition:width .2s;}
+  .search-wrap.expanded{width:150px;}
+  .search-wrap input{padding-left:34px;}
+  .topbar-actions{gap:6px;}
+  .btn-open-add-text{display:none;} /* hide "Add task" label on mobile */
+  .btn.btn-primary#btn-open-add{padding:8px 10px;}
+
+  /* hamburger button in topbar */
+  .btn-menu{
+    display:flex;align-items:center;justify-content:center;
+    width:36px;height:36px;border-radius:var(--r-s);
+    color:var(--ink);font-size:20px;flex-shrink:0;
+    background:transparent;border:none;cursor:pointer;
+    transition:background .12s;
+  }
+  .btn-menu:hover{background:var(--cream-d);}
+
+  /* ── TASKS PAGE mobile ── */
+  #page-tasks{flex-direction:column;}
+
+  /* left panel becomes a top summary strip */
+  .tasks-left{
+    width:100%;height:auto;flex-shrink:0;
+    border-right:none;border-bottom:1.5px solid var(--line);
+    flex-direction:column;
+  }
+
+  /* stats: 2x2 grid */
+  .stat-strip{grid-template-columns:repeat(2,1fr);}
+  .stat-cell:nth-child(2){border-right:none;}
+  .stat-cell:nth-child(3){border-top:1.5px solid var(--line);border-right:1.5px solid var(--line);}
+  .stat-cell:nth-child(4){border-top:1.5px solid var(--line);}
+  .stat-cell .num{font-size:20px;}
+
+  /* filters: horizontal scroll strip */
+  .filter-bar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 12px;}
+  .filter-bar::-webkit-scrollbar{display:none;}
+  .filter-pill{white-space:nowrap;flex-shrink:0;}
+
+  /* hide today panel on mobile (stats already visible) */
+  .today-panel{display:none;}
+
+  /* task list fills remaining height */
+  .tasks-right{flex:1;min-height:0;}
+  .task-list-pane{padding:10px 12px;}
+
+  /* delete button always visible on mobile (no hover) */
+  .task-del{opacity:1;}
+
+  /* ── JOURNAL PAGE mobile ── */
+  #page-journal{flex-direction:column;}
+
+  /* tree becomes a horizontal scrolling chip row */
+  .journal-tree{
+    width:100%;height:auto;flex-shrink:0;
+    border-right:none;border-bottom:1.5px solid var(--line);
+    flex-direction:column;
+  }
+  .journal-tree-scroll{
+    flex:none;overflow-y:hidden;
+    padding:0;
+  }
+  /* Replace full tree with chip row on mobile */
+  .journal-tree-scroll .tree-year,
+  .journal-tree-scroll .tree-months,
+  .journal-tree-scroll .tree-weeks{display:none;}
+  .journal-tree-scroll .tree-days{
+    display:flex !important;
+    flex-direction:row;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:8px 12px;
+    gap:6px;
+  }
+  .journal-tree-scroll .tree-days::-webkit-scrollbar{display:none;}
+  .journal-tree-scroll .tree-day{
+    flex-shrink:0;flex-direction:column;align-items:center;
+    padding:6px 10px;gap:3px;border-radius:10px;
+    background:var(--cream);border:1.5px solid var(--line);
+    min-width:52px;
+  }
+  .journal-tree-scroll .tree-day.active{
+    background:var(--accent-s);border-color:var(--accent-s);
+  }
+  .journal-tree-scroll .day-col{align-items:center;}
+  .journal-tree-scroll .day-snippet{display:none;}
+  .journal-tree-scroll .day-dot{margin-bottom:2px;}
+
+  /* editor fills rest */
+  .journal-editor{flex:1;min-height:0;}
+  .week-strip{display:none;} /* hidden — chips above serve same purpose */
+  .editor-top{padding:10px 14px;gap:10px;}
+  .editor-date-label{font-size:16px;}
+  .editor-date-meta{display:none;}
+  .editor-area textarea{padding:16px 18px;font-size:14px;line-height:2.2;}
+  .editor-footer{padding:7px 14px;gap:8px;flex-wrap:wrap;}
+  .editor-hint{display:none;}
+
+  /* ── modal: slides up from bottom ── */
+  .modal{
+    position:fixed;bottom:0;left:0;right:0;
+    width:100%;max-width:100%;
+    border-radius:20px 20px 0 0;
+    max-height:90dvh;overflow-y:auto;
+  }
+  @keyframes modalIn{
+    from{opacity:1;transform:translateY(100%);}
+    to{opacity:1;transform:translateY(0);}
+  }
+
+  /* mobile chip row */
+  .mobile-day-chips{
+    display:flex;
+    flex-direction:row;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:8px 12px;
+    gap:7px;
+    flex-shrink:0;
+  }
+  .mobile-day-chips::-webkit-scrollbar{display:none;}
+  .mobile-day-chip{
+    flex-shrink:0;display:flex;flex-direction:column;align-items:center;
+    gap:2px;padding:7px 10px;border-radius:10px;cursor:pointer;
+    background:white;border:1.5px solid var(--line);min-width:48px;
+    transition:background .12s,border-color .12s;
+  }
+  .mobile-day-chip.active{background:var(--accent-s);border-color:var(--accent);}
+  .mobile-day-chip .chip-dot{width:5px;height:5px;border-radius:50%;background:var(--line);margin-bottom:1px;}
+  .mobile-day-chip.has-entry .chip-dot{background:var(--accent);}
+  .mobile-day-chip .chip-dayname{font-size:10px;font-weight:700;color:var(--ink-f);text-transform:uppercase;letter-spacing:.05em;}
+  .mobile-day-chip .chip-daynum{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--ink);line-height:1;}
+  .mobile-day-chip .chip-mo{font-size:10px;color:var(--ink-f);font-weight:500;}
+  .mobile-day-chip.active .chip-daynum{color:var(--accent-d);}
+  .mobile-day-chip.active .chip-dayname{color:var(--accent-d);}
+  /* hide desktop tree on mobile */
+  .desktop-tree{display:none;}
+
+  /* ── bottom tab bar ── */
+  .bottom-tabs{
+    display:flex;flex-shrink:0;
+    border-top:1.5px solid var(--line);
+    background:var(--cream);
+    padding-bottom:env(safe-area-inset-bottom);
+    z-index:100;
+  }
+  .bottom-tab{
+    flex:1;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:3px;padding:10px 0 8px;
+    cursor:pointer;transition:background .12s;
+    font-size:11px;font-weight:600;color:var(--ink-f);
+  }
+  .bottom-tab i{font-size:22px;}
+  .bottom-tab.active{color:var(--accent-d);}
+  .bottom-tab .tab-dot{
+    width:4px;height:4px;border-radius:50%;
+    background:var(--accent);margin-top:1px;
+    opacity:0;transition:opacity .15s;
+  }
+  .bottom-tab.active .tab-dot{opacity:1;}
+}
+
+/* desktop: hide mobile-only elements */
+.bottom-tabs{display:none;}
+.btn-menu{display:none;}
+.sidebar-backdrop{display:none;}
+
+/* mobile chip row — shown on mobile only; desktop tree always shown on desktop */
+.mobile-day-chips{display:none;}
+.desktop-tree{display:block;}
+.tree-empty{text-align:center;padding:24px 16px;color:var(--ink-f);font-size:13px;line-height:1.6;}
+
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(43,42,40,.35);
   z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
 .modal-bg.open{display:flex;}
@@ -323,6 +523,7 @@ textarea,input,select{font-family:'Inter',sans-serif;outline:none;}
 
   <!-- topbar -->
   <div class="topbar">
+    <button class="btn-menu" id="btn-menu" aria-label="Menu"><i class="ti ti-menu-2"></i></button>
     <h2 id="topbar-title">Tasks</h2>
     <div class="topbar-actions">
       <div class="search-wrap" id="search-wrap">
@@ -330,7 +531,7 @@ textarea,input,select{font-family:'Inter',sans-serif;outline:none;}
         <input type="text" id="inp-search" placeholder="Search tasks…">
       </div>
       <button class="btn btn-primary" id="btn-open-add">
-        <i class="ti ti-plus"></i> Add task
+        <i class="ti ti-plus"></i><span class="btn-open-add-text"> Add task</span>
       </button>
     </div>
   </div>
@@ -675,9 +876,32 @@ function setSaveStatus(s){
 function renderJournalTree(){
   const scroll=$('journal-tree-scroll');
   const dates=Object.keys(entries).sort().reverse();
-  if(!dates.length){scroll.innerHTML='<div style="text-align:center;padding:24px;color:var(--ink-f);font-size:13px;">No entries yet</div>';return;}
 
-  // build tree: year → month → week → [dates]
+  if(!dates.length){
+    scroll.innerHTML='<div class="tree-empty">No entries yet.<br>Start writing today!</div>';
+    return;
+  }
+
+  /* ── MOBILE: flat chip row (all dates, most recent first) ── */
+  let mobileHtml='<div class="mobile-day-chips">';
+  dates.forEach(ds=>{
+    const e=entries[ds];
+    const isActive=ds===currentDate;
+    const hasEntry=!!e?.content?.trim();
+    const d=new Date(ds+'T00:00:00');
+    const dayNum=d.getDate();
+    const dayName=d.toLocaleDateString(undefined,{weekday:'short'});
+    const mo=d.toLocaleDateString(undefined,{month:'short'});
+    mobileHtml+=`<div class="mobile-day-chip${isActive?' active':''}${hasEntry?' has-entry':''}" onclick="navigateTo('${ds}')">
+      <div class="chip-dot"></div>
+      <div class="chip-dayname">${dayName}</div>
+      <div class="chip-daynum">${dayNum}</div>
+      <div class="chip-mo">${mo}</div>
+    </div>`;
+  });
+  mobileHtml+='</div>';
+
+  /* ── DESKTOP: full collapsible year/month/week/day tree ── */
   const tree={};
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   dates.forEach(ds=>{
@@ -689,18 +913,18 @@ function renderJournalTree(){
     tree[yr][mo][wk].push(ds);
   });
 
-  let html='';
+  let desktopHtml='<div class="desktop-tree">';
   Object.keys(tree).sort().reverse().forEach(yr=>{
-    html+=`<div class="tree-year">
+    desktopHtml+=`<div class="tree-year">
       <div class="tree-year-label" onclick="toggleNode(this)">
         <i class="ti ti-chevron-right" style="transform:rotate(90deg)"></i>${yr}
       </div><div class="tree-months open">`;
     Object.keys(tree[yr]).sort((a,b)=>b-a).forEach(mo=>{
-      html+=`<div><div class="tree-month-label" onclick="toggleNode(this)">
+      desktopHtml+=`<div><div class="tree-month-label" onclick="toggleNode(this)">
         <i class="ti ti-chevron-right" style="transform:rotate(90deg)"></i>${months[mo]}
       </div><div class="tree-weeks open">`;
       Object.keys(tree[yr][mo]).forEach(wk=>{
-        html+=`<div><div class="tree-week-label" onclick="toggleNode(this)">
+        desktopHtml+=`<div><div class="tree-week-label" onclick="toggleNode(this)">
           <i class="ti ti-chevron-right" style="transform:rotate(90deg)"></i>${wk}
         </div><div class="tree-days open">`;
         tree[yr][mo][wk].sort().reverse().forEach(ds=>{
@@ -710,18 +934,24 @@ function renderJournalTree(){
           const hasEntry=!!e?.content?.trim();
           const d=new Date(ds+'T00:00:00');
           const label=d.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
-          html+=`<div class="tree-day${isActive?' active':''}${hasEntry?' has-entry':''}" onclick="navigateTo('${ds}')">
+          desktopHtml+=`<div class="tree-day${isActive?' active':''}${hasEntry?' has-entry':''}" onclick="navigateTo('${ds}')">
             <div class="day-dot"></div>
             <div class="day-col"><span>${label}</span>${snippet?`<span class="day-snippet">${esc(snippet)}</span>`:''}</div>
           </div>`;
         });
-        html+=`</div></div>`;
+        desktopHtml+=`</div></div>`;
       });
-      html+=`</div></div>`;
+      desktopHtml+=`</div></div>`;
     });
-    html+=`</div></div>`;
+    desktopHtml+=`</div></div>`;
   });
-  scroll.innerHTML=html;
+  desktopHtml+='</div>';
+
+  scroll.innerHTML=mobileHtml+desktopHtml;
+
+  // scroll mobile chips to active
+  const activeChip=scroll.querySelector('.mobile-day-chip.active');
+  if(activeChip)activeChip.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
 }
 
 window.toggleNode=function(el){
@@ -789,25 +1019,50 @@ $('btn-today').addEventListener('click',()=>{flushSave();currentDate=todayStr();
 $('btn-today-entry').addEventListener('click',()=>{flushSave();currentDate=todayStr();renderEditor();});
 
 /* ═══════════════════════════════════════════════════════
-   NAV
+   NAV (shared between desktop sidebar + mobile bottom tabs)
 ═══════════════════════════════════════════════════════ */
-document.querySelectorAll('.nav-item').forEach(item=>{
-  item.addEventListener('click',()=>{
-    const page=item.dataset.page;
-    if(!page)return;
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    item.classList.add('active');
-    // hide all pages
-    document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});
-    // show target page
-    const target=document.getElementById('page-'+page);
-    if(target){target.classList.add('active');target.style.display='flex';}
-    $('topbar-title').textContent=page==='tasks'?'Tasks':'Journal';
-    $('search-wrap').style.display=page==='tasks'?'':'none';
-    $('btn-open-add').style.display=page==='tasks'?'':'none';
-    if(page==='journal')renderEditor();
+function switchPage(page){
+  // update all nav items (sidebar + bottom tabs)
+  document.querySelectorAll('.nav-item,.bottom-tab').forEach(n=>{
+    n.classList.toggle('active', n.dataset.page===page);
   });
+  // hide all pages
+  document.querySelectorAll('.page').forEach(p=>{
+    p.classList.remove('active');
+    p.style.display='none';
+  });
+  // show target page
+  const target=document.getElementById('page-'+page);
+  if(target){target.classList.add('active');target.style.display='flex';}
+  $('topbar-title').textContent=page==='tasks'?'Tasks':'Journal';
+  $('search-wrap').style.display=page==='tasks'?'':'none';
+  $('btn-open-add').style.display=page==='tasks'?'':'none';
+  if(page==='journal')renderEditor();
+  closeSidebar();
+}
+
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click',()=>switchPage(item.dataset.page));
 });
+document.querySelectorAll('.bottom-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>switchPage(tab.dataset.page));
+});
+
+/* ── mobile sidebar drawer ── */
+function openSidebar(){
+  const sb=document.querySelector('.sidebar');
+  const bd=$('sidebar-backdrop');
+  sb.classList.add('open');
+  bd.classList.add('open');
+}
+function closeSidebar(){
+  const sb=document.querySelector('.sidebar');
+  const bd=$('sidebar-backdrop');
+  sb.classList.remove('open');
+  bd.classList.remove('open');
+}
+$('btn-menu').addEventListener('click',openSidebar);
+$('sidebar-backdrop').addEventListener('click',closeSidebar);
 
 /* ── init ────────────────────────────────────────────── */
 function setSidebarDate(){
@@ -821,5 +1076,22 @@ function setSidebarDate(){
   renderEditor();
 })();
 </script>
+<!-- mobile sidebar backdrop -->
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<!-- mobile bottom tab bar -->
+<div class="bottom-tabs" id="bottom-tabs">
+  <div class="bottom-tab active" data-page="tasks">
+    <i class="ti ti-layout-kanban"></i>
+    <span>Tasks</span>
+    <div class="tab-dot"></div>
+  </div>
+  <div class="bottom-tab" data-page="journal">
+    <i class="ti ti-notebook"></i>
+    <span>Journal</span>
+    <div class="tab-dot"></div>
+  </div>
+</div>
+
 </body>
 </html>
