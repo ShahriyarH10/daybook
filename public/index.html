@@ -214,14 +214,16 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
 .fp.c-co.on{background:var(--plum-s);color:var(--plum-d);border-color:var(--plum-s);}
 .fp.status-done.on{background:var(--sage-s);color:var(--sage-d);border-color:var(--sage-s);}
 
-/* task list */
+/* task list — scrollable, fills column */
 .task-list{
   flex:1;overflow-y:auto;padding:10px;
   display:flex;flex-direction:column;gap:6px;
   min-height:0;
 }
-.task-list::-webkit-scrollbar{width:4px;}
+.task-list::-webkit-scrollbar{width:5px;}
+.task-list::-webkit-scrollbar-track{background:transparent;}
 .task-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:9px;}
+.task-list::-webkit-scrollbar-thumb:hover{background:var(--ink-f);}
 
 /* empty */
 .empty{
@@ -236,7 +238,7 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
 .tc{
   background:white;border:1.5px solid var(--line);border-radius:10px;
   padding:10px 12px;display:flex;align-items:flex-start;gap:9px;
-  position:relative;overflow:hidden;
+  position:relative;
   transition:transform .14s,box-shadow .14s,opacity .2s;
   animation:cIn .3s cubic-bezier(.16,1,.3,1) both;
   cursor:default;
@@ -266,8 +268,16 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
 .chk.on i{color:white;}
 
 .tc-body{flex:1;min-width:0;}
-.tc-title{font-size:13.5px;font-weight:600;margin-bottom:4px;line-height:1.3;}
-.tc-notes{font-size:11.5px;color:var(--ink-s);margin-bottom:5px;line-height:1.4;}
+.tc-title{
+  font-size:13.5px;font-weight:600;
+  line-height:1.4;margin-bottom:4px;
+  word-break:break-word;
+}
+.tc-notes{
+  font-size:11.5px;color:var(--ink-s);
+  line-height:1.5;margin-bottom:6px;
+  word-break:break-word;
+}
 .tc-meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
 
 /* ── unified chip system (desktop + mobile) ── */
@@ -545,7 +555,7 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
     background:white; border-radius:14px;
     padding:14px 15px;
     display:flex; align-items:flex-start; gap:12px;
-    position:relative; overflow:hidden;
+    position:relative;
     box-shadow:0 2px 8px rgba(43,42,40,.06);
     animation:cIn .3s cubic-bezier(.16,1,.3,1) both;
     transition:opacity .2s;
@@ -564,17 +574,23 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
 
   .m-chk{
     width:24px; height:24px; border-radius:7px;
-    border:2px solid var(--ink-f); flex-shrink:0; margin-top:1px;
+    border:2px solid var(--ink-f); flex-shrink:0; margin-top:2px;
     display:flex; align-items:center; justify-content:center;
     transition:background .12s, border-color .12s;
   }
   .m-chk.on{ background:var(--sage); border-color:var(--sage-d); }
-  .m-chk i{ font-size:14px; color:transparent; }
-  .m-chk.on i{ color:white; }
 
   .m-tc-body{ flex:1; min-width:0; }
-  .m-tc-title{ font-size:15.5px; font-weight:600; line-height:1.3; margin-bottom:4px; }
-  .m-tc-notes{ font-size:13.5px; color:var(--ink-s); line-height:1.45; margin-bottom:6px; }
+  .m-tc-title{
+    font-size:15.5px; font-weight:600;
+    line-height:1.4; margin-bottom:4px;
+    word-break:break-word;
+  }
+  .m-tc-notes{
+    font-size:13.5px; color:var(--ink-s);
+    line-height:1.5; margin-bottom:6px;
+    word-break:break-word;
+  }
   .m-tc-meta{ display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-top:8px; }
 
   /* bigger chips for mobile touch targets */
