@@ -578,7 +578,35 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
   .m-tc-body{ flex:1; min-width:0; }
   .m-tc-title{ font-size:15px; font-weight:600; line-height:1.3; margin-bottom:5px; }
   .m-tc-notes{ font-size:13px; color:var(--ink-s); line-height:1.4; margin-bottom:7px; }
-  .m-tc-meta{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .m-tc-meta{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-top:4px; }
+
+  /* mobile: override tiny desktop tag/pill/due to be readable */
+  .m-tc-meta .tag{
+    font-size:11.5px; padding:4px 10px; border-radius:8px;
+    display:inline-flex; align-items:center; gap:4px;
+    font-weight:700; text-transform:uppercase; letter-spacing:.03em;
+  }
+  .m-tc-meta .pill{
+    font-size:12px; padding:4px 10px; border-radius:8px;
+    display:inline-flex; align-items:center; gap:4px;
+    font-weight:600;
+  }
+  .m-tc-meta .pill .dot{
+    width:7px; height:7px; border-radius:50%; flex-shrink:0;
+  }
+  .m-tc-meta .due-chip{
+    font-size:12px; font-weight:600;
+    display:inline-flex; align-items:center; gap:4px;
+    padding:4px 10px; border-radius:8px;
+    background:var(--cream-d);
+  }
+  .m-tc-meta .due-chip.ov{ background:var(--accent-s); color:var(--accent-d); }
+  .m-tc-meta .due-chip.td{ background:var(--slate-s); color:var(--slate-d); }
+
+  /* make icon inside tag/pill visible on mobile */
+  .m-tc-meta .ti{
+    width:14px; height:14px; font-size:14px;
+  }
 
   .m-tc-edit{
     width:32px; height:32px; border-radius:8px; flex-shrink:0;
@@ -1177,6 +1205,13 @@ const CAT_ICON={academics:'ti-school',work:'ti-briefcase',personal:'ti-heart',co
 const CAT_LBL={academics:'Academics',work:'Work',personal:'Personal',coding:'Coding',other:'Other'};
 const PRI_LBL={high:'High',medium:'Medium',low:'Low'};
 
+/* normalize old data (may have uppercase keys like "Academics") */
+function normCat(c){ return (c||'other').toLowerCase(); }
+function normPri(p){ return (p||'medium').toLowerCase(); }
+function catIcon(c){ return CAT_ICON[normCat(c)]||'ti-dots'; }
+function catLbl(c){ return CAT_LBL[normCat(c)]||c||'Other'; }
+function priLbl(p){ return PRI_LBL[normPri(p)]||p||'Medium'; }
+
 /* ── render ─────────────────────────────────────────── */
 function render(){
   renderList();
@@ -1244,14 +1279,14 @@ function renderList(){
     let dc='',dSuf='';
     if(ov){dc='ov';dSuf=' · overdue';}
     else if(td){dc='td';dSuf=' · today';}
-    return`<div class="tc cat-${t.category}${t.done?' done':''}" style="animation-delay:${Math.min(i,12)*.022}s" data-id="${t.id}">
+    return`<div class="tc cat-${normCat(t.category)}${t.done?' done':''}" style="animation-delay:${Math.min(i,12)*.022}s" data-id="${t.id}">
       <div class="chk${t.done?' on':''}" data-action="toggle"><i class="ti ti-check"></i></div>
       <div class="tc-body">
         <div class="tc-title">${esc(t.title)}</div>
         ${t.notes?`<div class="tc-notes">${esc(t.notes)}</div>`:''}
         <div class="tc-meta">
-          <span class="tag tag-${t.category}"><i class="ti ${CAT_ICON[t.category]}"></i>${CAT_LBL[t.category]}</span>
-          <span class="pill pill-${t.priority}"><span class="dot"></span>${PRI_LBL[t.priority]}</span>
+          <span class="tag tag-${normCat(t.category)}"><i class="ti ${catIcon(t.category)}"></i>${catLbl(t.category)}</span>
+          <span class="pill pill-${normPri(t.priority)}"><span class="dot"></span>${priLbl(t.priority)}</span>
           ${ds?`<span class="due-chip ${dc}"><i class="ti ti-calendar" style="font-size:11px"></i>${ds}${dSuf}</span>`:''}
         </div>
       </div>
@@ -1293,7 +1328,7 @@ function renderSide(){
   if(up){
     const ovUp=isOv(up);
     nc.className='next-card';
-    nc.innerHTML=`<i class="ti ${ovUp?'ti-alert-triangle':CAT_ICON[up.category]}" style="color:var(--accent-d)"></i>
+    nc.innerHTML=`<i class="ti ${ovUp?'ti-alert-triangle':catIcon(up.category)}" style="color:var(--accent-d)"></i>
       <div>
         <div class="next-text">${esc(up.title)}</div>
         ${up.due?`<div class="next-date">${fmtDateFull(up.due)}${ovUp?' · overdue':''}</div>`:''}
@@ -1311,7 +1346,7 @@ function renderSide(){
   }else{
     dtl.innerHTML=todayTasks.map(t=>`
       <div class="dt-item">
-        <i class="ti ${CAT_ICON[t.category]}"></i>
+        <i class="ti ${catIcon(t.category)}"></i>
         <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(t.title)}</span>
       </div>`).join('');
   }
@@ -1626,7 +1661,7 @@ function renderMobileTasks(){
     let dc='',dsuf='';
     if(ov){dc='ov';dsuf=' · overdue';}
     else if(td){dc='td';dsuf=' · today';}
-    return`<div class="m-tc cat-${t.category}${t.done?' done':''}" style="animation-delay:${Math.min(i,10)*.03}s">
+    return`<div class="m-tc cat-${normCat(t.category)}${t.done?' done':''}" style="animation-delay:${Math.min(i,10)*.03}s">
       <div class="m-chk${t.done?' on':''}" data-ma="toggle" data-id="${t.id}">
         <i class="ti ti-check"></i>
       </div>
@@ -1634,8 +1669,8 @@ function renderMobileTasks(){
         <div class="m-tc-title">${esc(t.title)}</div>
         ${t.notes?`<div class="m-tc-notes">${esc(t.notes)}</div>`:''}
         <div class="m-tc-meta">
-          <span class="tag tag-${t.category}"><i class="ti ${CAT_ICON[t.category]}"></i>${CAT_LBL[t.category]}</span>
-          <span class="pill pill-${t.priority}"><span class="dot"></span>${PRI_LBL[t.priority]}</span>
+          <span class="tag tag-${normCat(t.category)}"><i class="ti ${catIcon(t.category)}"></i>${catLbl(t.category)}</span>
+          <span class="pill pill-${normPri(t.priority)}"><span class="dot"></span>${priLbl(t.priority)}</span>
           ${ds?`<span class="due-chip ${dc}"><i class="ti ti-calendar" style="font-size:11px"></i>${ds}${dsuf}</span>`:''}
         </div>
       </div>
@@ -1687,7 +1722,7 @@ function renderMobileStats(){
     })[0];
     nextEl.innerHTML=up
       ?`<div class="m-info-row next-row">
-          <i class="ti ${isOv(up)?'ti-alert-triangle':CAT_ICON[up.category]}"></i>
+          <i class="ti ${isOv(up)?'ti-alert-triangle':catIcon(up.category)}"></i>
           <div class="m-row-text">
             <div class="m-row-title">${esc(up.title)}</div>
             ${up.due?`<div class="m-row-date">${fmtDateFull(up.due)}</div>`:''}
@@ -1702,7 +1737,7 @@ function renderMobileStats(){
     todEl.innerHTML=!td.length
       ?`<div class="m-info-row empty-row"><i class="ti ti-circle-check"></i> Nothing due today</div>`
       :td.map(t=>`<div class="m-info-row today-row">
-          <i class="ti ${CAT_ICON[t.category]}"></i>
+          <i class="ti ${catIcon(t.category)}"></i>
           <div class="m-row-text"><div class="m-row-title">${esc(t.title)}</div></div>
         </div>`).join('');
   }
