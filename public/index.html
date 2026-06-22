@@ -270,35 +270,27 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
 .tc-notes{font-size:11.5px;color:var(--ink-s);margin-bottom:5px;line-height:1.4;}
 .tc-meta{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
 
-.tag{
-  font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;
-  display:inline-flex;align-items:center;gap:3px;
-  text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;
+/* ── unified chip system (desktop + mobile) ── */
+.chip{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:600;padding:3px 9px;border-radius:99px;
+  white-space:nowrap;flex-shrink:0;line-height:1.4;
 }
-.tag-academics{background:var(--slate-s);color:var(--slate-d);}
-.tag-work{background:var(--gold-s);color:var(--gold-d);}
-.tag-personal{background:var(--sage-s);color:var(--sage-d);}
-.tag-coding{background:var(--plum-s);color:var(--plum-d);}
-.tag-other{background:var(--cream-dd);color:var(--ink-s);}
-
-.pill{
-  font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:99px;
-  display:inline-flex;align-items:center;gap:3px;flex-shrink:0;
-}
-.pill-high{background:var(--accent-s);color:var(--accent-d);}
-.pill-medium{background:var(--gold-s);color:var(--gold-d);}
-.pill-low{background:var(--cream-dd);color:var(--ink-s);}
-.pill .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
-.pill-high .dot{background:var(--accent-d);}
-.pill-medium .dot{background:var(--gold-d);}
-.pill-low .dot{background:var(--ink-f);}
-
-.due-chip{
-  font-size:11px;display:flex;align-items:center;gap:3px;
-  color:var(--ink-f);font-weight:500;flex-shrink:0;
-}
-.due-chip.ov{color:var(--accent-d);font-weight:700;}
-.due-chip.td{color:var(--slate-d);font-weight:700;}
+.chip svg{flex-shrink:0;}
+/* category */
+.chip-cat-academics{background:var(--slate-s);color:var(--slate-d);}
+.chip-cat-work{background:var(--gold-s);color:var(--gold-d);}
+.chip-cat-personal{background:var(--sage-s);color:var(--sage-d);}
+.chip-cat-coding{background:var(--plum-s);color:var(--plum-d);}
+.chip-cat-other{background:var(--cream-dd);color:var(--ink-s);}
+/* priority */
+.chip-pri-high{background:var(--accent-s);color:var(--accent-d);}
+.chip-pri-medium{background:var(--gold-s);color:var(--gold-d);}
+.chip-pri-low{background:var(--cream-dd);color:var(--ink-s);}
+/* due date */
+.chip-due{background:var(--cream-d);color:var(--ink-s);}
+.chip-ov{background:var(--accent-s);color:var(--accent-d);font-weight:700;}
+.chip-td{background:var(--slate-s);color:var(--slate-d);font-weight:700;}
 
 .tc-actions{
   display:flex;flex-direction:column;gap:3px;flex-shrink:0;
@@ -389,6 +381,11 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
 }
 .od-item i{color:var(--accent-d);font-size:14px;flex-shrink:0;}
 .od-item:last-child{margin-bottom:0;}
+
+/* ── ICONS ──────────────────────────────────────────── */
+.next-icon{display:inline-flex;align-items:center;flex-shrink:0;}
+.next-icon svg,.m-info-icon svg{display:block;}
+.m-ei{font-size:32px;display:block;margin-bottom:10px;opacity:.5;}
 
 /* ── MODAL ───────────────────────────────────────────── */
 .overlay{
@@ -578,28 +575,15 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
   .m-tc-body{ flex:1; min-width:0; }
   .m-tc-title{ font-size:15.5px; font-weight:600; line-height:1.3; margin-bottom:4px; }
   .m-tc-notes{ font-size:13.5px; color:var(--ink-s); line-height:1.45; margin-bottom:6px; }
+  .m-tc-meta{ display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-top:8px; }
 
-  /* mobile badge system — pure text, guaranteed visible */
-  .m-badge{
-    display:inline-block; font-size:12px; font-weight:700;
-    padding:4px 11px; border-radius:99px; white-space:nowrap;
+  /* bigger chips for mobile touch targets */
+  .m-tc-meta .chip{
+    font-size:12.5px; font-weight:600;
+    padding:5px 12px; border-radius:99px;
   }
-  /* category badges */
-  .m-cat-ac{ background:var(--slate-s); color:var(--slate-d); }
-  .m-cat-wo{ background:var(--gold-s);  color:var(--gold-d);  }
-  .m-cat-pe{ background:var(--sage-s);  color:var(--sage-d);  }
-  .m-cat-co{ background:var(--plum-s);  color:var(--plum-d);  }
-  .m-cat-ot{ background:var(--cream-dd);color:var(--ink-s);   }
-  /* priority badges */
-  .m-pri-hi{ background:var(--accent-s); color:var(--accent-d); }
-  .m-pri-me{ background:var(--gold-s);   color:var(--gold-d);   }
-  .m-pri-lo{ background:var(--cream-dd); color:var(--ink-s);    }
-  /* due date badges */
-  .m-due-norm{ background:var(--cream-d); color:var(--ink-s); }
-  .m-due-ov{ background:var(--accent-s); color:var(--accent-d); font-weight:700; }
-  .m-due-td{ background:var(--slate-s);  color:var(--slate-d);  font-weight:700; }
+  .m-tc-meta .chip svg{ width:13px; height:13px; flex-shrink:0; }
 
-  .m-tc-meta{ display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-top:6px; }
 
   .m-tc-edit{
     width:32px; height:32px; border-radius:8px; flex-shrink:0;
@@ -1053,7 +1037,7 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
     </div>
     <!-- overdue -->
     <div class="m-info-card">
-      <div class="ic-title"><i class="ti ti-alert-triangle"></i> Overdue</div>
+      <div class="ic-title">⚠️ Overdue</div>
       <div id="m-overdue-list"></div>
     </div>
   </div>
@@ -1068,7 +1052,7 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
 <!-- Bottom tab bar -->
 <div class="m-tabbar" id="m-tabbar">
   <div class="m-tab active" data-mscreen="tasks">
-    <i class="ti ti-layout-list"></i>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="6" height="6" rx="1"/><rect x="3" y="13" width="6" height="6" rx="1"/><line x1="13" y1="6" x2="21" y2="6"/><line x1="13" y1="14" x2="21" y2="14"/></svg>
     <span>Tasks</span>
     <div class="m-tab-dot"></div>
   </div>
@@ -1115,11 +1099,11 @@ input,select,textarea{font-family:inherit;color:var(--ink);outline:none;}
     </div>
     <div class="modal-foot">
       <button class="btn btn-danger" id="modal-delete" style="margin-right:auto;">
-        <i class="ti ti-trash"></i> Delete
+        🗑 Delete
       </button>
       <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
       <button class="btn btn-ink" id="modal-save">
-        <i class="ti ti-check"></i> Save
+        ✓ Save
       </button>
     </div>
   </div>
@@ -1202,18 +1186,50 @@ const fmtDateFull=s=>{
   if(!s)return'';
   return new Date(s+'T00:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
 };
-const priRank=p=>p==='high'?0:p==='medium'?1:2;
+const priRank=p=>{const n=normPri(p);return n==='high'?0:n==='medium'?1:2;}
 
-const CAT_ICON={academics:'ti-school',work:'ti-briefcase',personal:'ti-heart',coding:'ti-code',other:'ti-dots'};
+/* ── data normalization ── */
+function normCat(c){ return (c||'other').toLowerCase().trim(); }
+function normPri(p){ return (p||'medium').toLowerCase().trim(); }
+
 const CAT_LBL={academics:'Academics',work:'Work',personal:'Personal',coding:'Coding',other:'Other'};
-const PRI_LBL={high:'High',medium:'Medium',low:'Low'};
+const PRI_LBL={high:'High priority',medium:'Medium priority',low:'Low priority'};
+const PRI_SHORT={high:'High',medium:'Medium',low:'Low'};
 
-/* normalize old data (may have uppercase keys like "Academics") */
-function normCat(c){ return (c||'other').toLowerCase(); }
-function normPri(p){ return (p||'medium').toLowerCase(); }
-function catIcon(c){ return CAT_ICON[normCat(c)]||'ti-dots'; }
-function catLbl(c){ return CAT_LBL[normCat(c)]||c||'Other'; }
-function priLbl(p){ return PRI_LBL[normPri(p)]||p||'Medium'; }
+function catLbl(c){ return CAT_LBL[normCat(c)]||'Other'; }
+function priLbl(c){ return PRI_SHORT[normPri(c)]||'Medium'; }
+
+/* ── inline SVG icons (no CDN needed) ── */
+const SVG={
+  check:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  pencil:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`,
+  trash:`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>`,
+  cal:`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
+  warn:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+  star:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  clock:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l2 2"/></svg>`,
+  circlecheck:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>`,
+  cat:{
+    academics:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`,
+    work:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`,
+    personal:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+    coding:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    other:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>`,
+  }
+};
+function catSvg(c){ return SVG.cat[normCat(c)]||SVG.cat.other; }
+
+/* ── shared chip builder (used by both desktop + mobile) ── */
+function makeChips(t){
+  const cat=normCat(t.category);
+  const pri=normPri(t.priority);
+  const ov=isOv(t), td=isTd(t);
+  const ds=fmtDate(t.due);
+  const catChip=`<span class="chip chip-cat-${cat}">${catSvg(t.category)}${catLbl(t.category)}</span>`;
+  const priChip=`<span class="chip chip-pri-${pri}">${priLbl(t.priority)}</span>`;
+  const dueChip=ds?`<span class="chip ${ov?'chip-ov':td?'chip-td':'chip-due'}">${SVG.cal} ${ds}${ov?' · overdue':td?' · today':''}</span>`:'';
+  return catChip+priChip+dueChip;
+}
 
 /* ── render ─────────────────────────────────────────── */
 function render(){
@@ -1231,12 +1247,12 @@ function getFiltered(){
     list=list.filter(t=>
       t.title.toLowerCase().includes(q)||
       (t.notes||'').toLowerCase().includes(q)||
-      t.category.toLowerCase().includes(q)
+      (t.category||'').toLowerCase().includes(q)
     );
   }
 
   // category
-  if(tFilter!=='all') list=list.filter(t=>t.category===tFilter);
+  if(tFilter!=='all') list=list.filter(t=>normCat(t.category)===tFilter);
 
   // status
   if(tStatus==='pending') list=list.filter(t=>!t.done);
@@ -1269,36 +1285,27 @@ function renderList(){
       ? 'Try adjusting the filters above'
       : 'Add a task using the form on the left';
     pane.innerHTML=`<div class="empty">
-      <i class="ti ti-clipboard-list"></i>
+      <div style="font-size:32px;margin-bottom:8px;opacity:.35">📋</div>
       <div class="empty-title">${msg}</div>
       <div class="empty-sub">${sub}</div>
     </div>`;
     return;
   }
 
-  pane.innerHTML=list.map((t,i)=>{
-    const ov=isOv(t), td=isTd(t);
-    const ds=fmtDate(t.due);
-    let dc='',dSuf='';
-    if(ov){dc='ov';dSuf=' · overdue';}
-    else if(td){dc='td';dSuf=' · today';}
-    return`<div class="tc cat-${normCat(t.category)}${t.done?' done':''}" style="animation-delay:${Math.min(i,12)*.022}s" data-id="${t.id}">
-      <div class="chk${t.done?' on':''}" data-action="toggle"><i class="ti ti-check"></i></div>
+  pane.innerHTML=list.map((t,i)=>
+    `<div class="tc cat-${normCat(t.category)}${t.done?' done':''}" style="animation-delay:${Math.min(i,12)*.022}s" data-id="${t.id}">
+      <div class="chk${t.done?' on':''}" data-action="toggle">${t.done?SVG.check:''}</div>
       <div class="tc-body">
         <div class="tc-title">${esc(t.title)}</div>
         ${t.notes?`<div class="tc-notes">${esc(t.notes)}</div>`:''}
-        <div class="tc-meta">
-          <span class="tag tag-${normCat(t.category)}"><i class="ti ${catIcon(t.category)}"></i>${catLbl(t.category)}</span>
-          <span class="pill pill-${normPri(t.priority)}"><span class="dot"></span>${priLbl(t.priority)}</span>
-          ${ds?`<span class="due-chip ${dc}"><i class="ti ti-calendar" style="font-size:11px"></i>${ds}${dSuf}</span>`:''}
-        </div>
+        <div class="tc-meta">${makeChips(t)}</div>
       </div>
       <div class="tc-actions">
-        <button class="tc-btn edit" data-action="edit" title="Edit"><i class="ti ti-pencil"></i></button>
-        <button class="tc-btn del" data-action="delete" title="Delete"><i class="ti ti-trash"></i></button>
+        <button class="tc-btn edit" data-action="edit" title="Edit">${SVG.pencil}</button>
+        <button class="tc-btn del" data-action="delete" title="Delete">${SVG.trash}</button>
       </div>
-    </div>`;
-  }).join('');
+    </div>`
+  ).join('');
 }
 
 function renderStats(){
@@ -1331,14 +1338,10 @@ function renderSide(){
   if(up){
     const ovUp=isOv(up);
     nc.className='next-card';
-    nc.innerHTML=`<i class="ti ${ovUp?'ti-alert-triangle':catIcon(up.category)}" style="color:var(--accent-d)"></i>
-      <div>
-        <div class="next-text">${esc(up.title)}</div>
-        ${up.due?`<div class="next-date">${fmtDateFull(up.due)}${ovUp?' · overdue':''}</div>`:''}
-      </div>`;
+    nc.innerHTML='<span class="next-icon">'+( ovUp?SVG.warn:(SVG.cat[normCat(up.category)]||SVG.cat.other) )+'</span><div><div class="next-text">'+esc(up.title)+'</div>'+(up.due?'<div class="next-date">'+fmtDateFull(up.due)+(ovUp?' · overdue':'')+'</div>':'')+'</div>';
   }else{
     nc.className='next-card empty-next';
-    nc.innerHTML=`<i class="ti ti-sparkles"></i><div><div class="next-text">All caught up!</div></div>`;
+    nc.innerHTML='<span class="next-icon">'+SVG.star+'</span><div><div class="next-text">All caught up!</div></div>';
   }
 
   // due today
@@ -1349,7 +1352,7 @@ function renderSide(){
   }else{
     dtl.innerHTML=todayTasks.map(t=>`
       <div class="dt-item">
-        <i class="ti ${catIcon(t.category)}"></i>
+        <span class="next-icon">${SVG.cat[normCat(t.category)]||SVG.cat.other}</span>
         <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(t.title)}</span>
       </div>`).join('');
   }
@@ -1362,7 +1365,7 @@ function renderSide(){
   }else{
     ovl.innerHTML=ovTasks.slice(0,4).map(t=>`
       <div class="od-item">
-        <i class="ti ti-alert-triangle"></i>
+        <span class="next-icon">${SVG.warn}</span>
         <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(t.title)} <span style="opacity:.6;font-size:10px">${fmtDate(t.due)}</span></span>
       </div>`).join('')
     + (ovTasks.length>4?`<div class="dt-none" style="margin-top:4px">+${ovTasks.length-4} more</div>`:'');
@@ -1651,7 +1654,7 @@ function renderMobileTasks(){
   if(!list.length){
     const isEmpty=tasks.length===0;
     pane.innerHTML=`<div class="m-empty">
-      <i class="ti ${isEmpty?'ti-clipboard-list':'ti-filter-off'}"></i>
+      <span class="m-ei">${isEmpty?'📋':'🔍'}</span>
       <div class="m-empty-title">${isEmpty?'No tasks yet':'No matching tasks'}</div>
       <div class="m-empty-sub">${isEmpty?'Tap the + button to add your first task':'Try a different filter'}</div>
     </div>`;
@@ -1659,25 +1662,15 @@ function renderMobileTasks(){
   }
 
   pane.innerHTML=list.map((t,i)=>{
-    const ov=isOv(t), td=isTd(t);
-    const ds=fmtDate(t.due);
     const cat=normCat(t.category);
-    const pri=normPri(t.priority);
-    const dueBadge=ds?`<span class="m-badge ${ov?'m-due-ov':td?'m-due-td':'m-due-norm'}">📅 ${ds}${ov?' · overdue':td?' · today':''}</span>`:'';
-    const catClass={academics:'m-cat-ac',work:'m-cat-wo',personal:'m-cat-pe',coding:'m-cat-co',other:'m-cat-ot'}[cat]||'m-cat-ot';
-    const priClass={high:'m-pri-hi',medium:'m-pri-me',low:'m-pri-lo'}[pri]||'m-pri-me';
     return`<div class="m-tc cat-${cat}${t.done?' done':''}" style="animation-delay:${Math.min(i,10)*.03}s">
       <div class="m-chk${t.done?' on':''}" data-ma="toggle" data-id="${t.id}">
-        ${t.done?`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`:''}
+        ${t.done?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':''}
       </div>
       <div class="m-tc-body">
         <div class="m-tc-title">${esc(t.title)}</div>
         ${t.notes?`<div class="m-tc-notes">${esc(t.notes)}</div>`:''}
-        <div class="m-tc-meta">
-          <span class="m-badge ${catClass}">${catLbl(t.category)}</span>
-          <span class="m-badge ${priClass}">${priLbl(t.priority)}</span>
-          ${dueBadge}
-        </div>
+        <div class="m-tc-meta">${makeChips(t)}</div>
       </div>
       <button class="m-tc-edit" data-ma="edit" data-id="${t.id}">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -1725,37 +1718,25 @@ function renderMobileStats(){
       if(!a.due)return 1; if(!b.due)return-1;
       return new Date(a.due)-new Date(b.due);
     })[0];
-  /* inline SVGs for mobile stats — no CDN dependency */
-  const SVG_WARN=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
-  const SVG_STAR=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
-  const SVG_CHECK=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>`;
-  const SVG_CLOCK=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l2 2"/></svg>`;
-  const SVG_CAT={
-    academics:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>`,
-    work:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>`,
-    personal:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
-    coding:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-    other:`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>`
-  };
 
   nextEl.innerHTML=up
     ?`<div class="m-info-row next-row">
-        <span class="m-info-icon">${isOv(up)?SVG_WARN:(SVG_CAT[normCat(up.category)]||SVG_CAT.other)}</span>
+        <span class="m-info-icon">${isOv(up)?SVG.warn:SVG.cat[normCat(up.category)]||SVG.cat.other}</span>
         <div class="m-row-text">
           <div class="m-row-title">${esc(up.title)}</div>
           ${up.due?`<div class="m-row-date">${fmtDateFull(up.due)}${isOv(up)?' · overdue':''}</div>`:''}
         </div>
       </div>`
-    :`<div class="m-info-row empty-row"><span class="m-info-icon">${SVG_STAR}</span> All caught up!</div>`;
-}
+    :`<div class="m-info-row empty-row"><span class="m-info-icon">${SVG.star}</span> All caught up!</div>`;
+  }
 
   /* due today */
   const todEl=$('m-today-list');
   if(todEl){
     todEl.innerHTML=!td.length
-      ?`<div class="m-info-row empty-row"><span class="m-info-icon">${SVG_CHECK}</span> Nothing due today</div>`
+      ?`<div class="m-info-row empty-row"><span class="m-info-icon">${SVG.circlecheck}</span> Nothing due today</div>`
       :td.map(t=>`<div class="m-info-row today-row">
-          <span class="m-info-icon">${SVG_CAT[normCat(t.category)]||SVG_CAT.other}</span>
+          <span class="m-info-icon">${SVG.cat[normCat(t.category)]||SVG.cat.other}</span>
           <div class="m-row-text"><div class="m-row-title">${esc(t.title)}</div></div>
         </div>`).join('');
   }
@@ -1764,9 +1745,9 @@ function renderMobileStats(){
   const ovEl=$('m-overdue-list');
   if(ovEl){
     ovEl.innerHTML=!ov.length
-      ?`<div class="m-info-row empty-row"><span class="m-info-icon">${SVG_STAR}</span> Nothing overdue 🎉</div>`
+      ?`<div class="m-info-row empty-row"><span class="m-info-icon">${SVG.star}</span> Nothing overdue 🎉</div>`
       :ov.slice(0,5).map(t=>`<div class="m-info-row ov-row">
-          <span class="m-info-icon">${SVG_CLOCK}</span>
+          <span class="m-info-icon">${SVG.clock}</span>
           <div class="m-row-text">
             <div class="m-row-title">${esc(t.title)}</div>
             ${t.due?`<div class="m-row-date">${fmtDateFull(t.due)}</div>`:''}
